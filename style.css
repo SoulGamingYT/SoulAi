@@ -2,7 +2,7 @@ const input = document.getElementById("user-input");
 const chatBox = document.getElementById("chat-box");
 const sendBtn = document.getElementById("send-btn");
 
-const OPENAI_API_KEY = "sk-xxxxxxxxxxxxxxxxxxxxxxxxxx"; // replace with your real key
+const OPENAI_API_KEY = "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"; // replace with your real key
 const PROXY_URL = "https://api-proxy.cyclic.app/v1/chat/completions"; // free public proxy
 
 sendBtn.addEventListener("click", sendMessage);

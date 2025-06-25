@@ -1,45 +1,60 @@
-const input = document.getElementById("user-input");
-const chatBox = document.getElementById("chat-box");
-const sendBtn = document.getElementById("send-btn");
-
-// Replace with your real API key and endpoint if needed
-const OPENAI_API_KEY = "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";
-
-sendBtn.addEventListener("click", sendMessage);
-input.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") sendMessage();
-});
-
-async function sendMessage() {
-  const userText = input.value.trim();
-  if (!userText) return;
-
-  appendMessage("You", userText);
-  input.value = "";
-  
-  appendMessage("SoulGPT", "Typing...");
-
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${OPENAI_API_KEY}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      model: "gpt-4",
-      messages: [{ role: "user", content: userText }],
-    })
-  });
-
-  const data = await response.json();
-  chatBox.lastChild.remove(); // remove "Typing..." message
-  appendMessage("SoulGPT", data.choices[0].message.content);
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #1a1a1a;
+  color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-function appendMessage(sender, text) {
-  const msg = document.createElement("div");
-  msg.innerHTML = `<strong>${sender}:</strong> ${text}`;
-  msg.style.margin = "10px 0";
-  chatBox.appendChild(msg);
-  chatBox.scrollTop = chatBox.scrollHeight;
+.container {
+  width: 100%;
+  max-width: 700px;
+  height: 90vh;
+  background: #2a2a2a;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #121212;
+  padding: 20px;
+  text-align: center;
+}
+
+.logo {
+  width: 40px;
+  vertical-align: middle;
+}
+
+main {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+footer {
+  display: flex;
+  border-top: 1px solid #333;
+  background: #1e1e1e;
+}
+
+#user-input {
+  flex: 1;
+  padding: 15px;
+  background: #333;
+  border: none;
+  color: white;
+}
+
+#send-btn {
+  padding: 15px 20px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
